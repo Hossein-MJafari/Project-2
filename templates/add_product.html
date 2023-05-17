@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Add New Product</title>
+  <link rel="stylesheet" href="/static/css/add_product_style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="file-upload-container">
+      <div class="wrapper" onclick="">
+        <div class="image">
+          <img src="" alt="">
+        </div>
+        <div class="content">
+          <div class="icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <div class="text">
+            No image chosen, yet!
+          </div>
+        </div>
+        <div id="cancel-btn">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="file-name">
+          Image name here
+        </div>
+      </div>
+      <button onclick="defaultBtnActive()" id="custom-btn">Choose an image</button>
+      <input id="default-btn" type="file" hidden>
+      <div class="link-text">
+        Or paste the link of the image here:
+      </div>
+      <input type="url" name="img-link" id="img-link">
+      <button onclick="" id="custom-btn">Add image link</button>
+      <input id="default-btn" type="file" hidden>
+    </div>
+    <div class="info-container">
+      <form action="#">
+        <label for="product-name">Enter the Product's name:</label>
+        <input type="text" name="product-name" id="product-name"><br />
+        <label for="product-price">Enter the Product's price:</label>
+        <input type="number" name="product-price" id="product-price"><br />
+        <label for="product-info">Enter a description for the Product:</label>
+        <textarea name="product-info" id="product-info" cols="30" rows="10" placeholder="Any extra information about the product..."></textarea>
+        <input type="submit" value="Add the Product">
+      </form>
+    </div>
+  </div>
+  <script>
+    const wrapper = document.querySelector(".wrapper");
+    const fileName = document.querySelector(".file-name");
+    const defaultBtn = document.querySelector("#default-btn");
+    const customBtn = document.querySelector("#custom-btn");
+    const cancelBtn = document.querySelector("#cancel-btn i");
+    const img = document.querySelector("img");
+    let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+    function defaultBtnActive() {
+      defaultBtn.click();
+    }
+    defaultBtn.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function () {
+          const result = reader.result;
+          img.src = result;
+          img.style.display = "block";
+          wrapper.classList.add("active");
+        }
+        cancelBtn.addEventListener("click", function () {
+          img.src = "";
+          img.style.display = "none";
+          wrapper.classList.remove("active");
+        })
+        reader.readAsDataURL(file);
+      }
+      if (this.value) {
+        let valueStore = this.value.match(regExp);
+        fileName.textContent = valueStore;
+      }
+    });
+  </script>
+</body>
+
+</html>
