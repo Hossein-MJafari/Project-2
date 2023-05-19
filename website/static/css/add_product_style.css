@@ -4,7 +4,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 
 html,
@@ -15,18 +14,15 @@ body {
 }
 
 .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 50px;
+    margin-top: 50px;
 }
 
 .file-upload-container {
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, .1);
-    padding: 10px;
-    margin: 50px;
-    height: 580px;
-    border-radius: 15px;
-    position: relative;
+    margin: 20px;
+}
+
+.info-container {
+    margin: 20px;
 }
 
 .file-upload-container .wrapper {
@@ -51,13 +47,8 @@ body {
     position: absolute;
     height: 100%;
     width: 100%;
-    display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.wrapper:hover{
-    cursor: pointer;
 }
 
 .wrapper img {
@@ -69,11 +60,14 @@ body {
 
 .wrapper .icon {
     font-size: 100px;
+}
+
+.wrapper .icon i {
+    margin: 0 0 0 30px;
     background: linear-gradient(135deg, #3a8ffe, #9658fe, #880066);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-size: 200%;
-    transition: background-position .3s;
 }
 
 .wrapper .text {
@@ -118,8 +112,8 @@ body {
     display: block;
 }
 
-.file-upload-container #custom-btn, input[type="submit"] {
-    margin-top: 30px;
+input[type="submit"] {
+    margin-top: 25px;
     display: block;
     width: 100%;
     height: 50px;
@@ -137,20 +131,48 @@ body {
     transition: background-position .3s;
 }
 
-.file-upload-container #custom-btn:hover, input[type="submit"]:hover {
+input[type="submit"]:hover,
+#custom-btn:hover {
     background-position: right;
 }
 
+#default-btn{
+    margin-top: 20px;
+}
+
+#custom-btn {
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 20px;
+    width: 100%;
+    height: 50px;
+    border: none;
+    outline: none;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background-image: linear-gradient(135deg, #3a8ffe, #9658fe, #880066);
+    background-size: 200%;
+    transition: background-position .3s;
+}
 
 form {
+    display: grid;
+    grid-template-columns: 50% 50%;
     margin: 0 auto;
     padding: 20px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .1);
     border-radius: 15px;
-    margin: 50px;
+    margin: 20px 30px;
 }
 
-input[type="text"], input[type="number"], #img-link {
+input[type="text"],
+input[type="number"],
+#img-link {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -159,11 +181,12 @@ input[type="text"], input[type="number"], #img-link {
     border-radius: 10px;
 }
 
-label , .link-text{
+label,
+.link-text {
     font-size: 18px;
     font-weight: bold;
     display: block;
-    margin: 5px 0;
+    margin: 5px 5px;
 }
 
 textarea {
@@ -174,4 +197,9 @@ textarea {
     box-sizing: border-box;
     border-radius: 10px;
     border: 2px solid #9e9e9e;
+}
+
+.btn-close {
+    position: absolute;
+    right: 10px;
 }
