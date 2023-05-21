@@ -1,3 +1,4 @@
+from sre_constants import SUCCESS
 from flask import Blueprint, render_template, request, session, flash
 from .models import Product
 from . import db
@@ -15,7 +16,7 @@ def add_product():
         img_file = request.files['img_file']
         img_link = request.form.get("img_link")
         filename = img_file.filename
-        # print(filename)
+
 
         product = Product.query.filter_by(name=product_name).first()
 
@@ -37,8 +38,11 @@ def add_product():
                 return render_template("add_product.html", filename="")
 
             try:
+                img_file.save(filename)
+                filename = '\\website\\' + filename
                 new_product = Product(name=product_name, price=product_price,
-                                      image=filename if filename != "" and img_link == "" else img_link, info=product_info)
+                                      image=filename if filename != "\\website\\" and img_link == "" else img_link, info=product_info)
+                flash(f"{filename} added!", category='success')
                 db.session.add(new_product)
                 db.session.commit()
             except:
