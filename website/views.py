@@ -1,7 +1,7 @@
-from sre_constants import SUCCESS
 from flask import Blueprint, render_template, request, session, flash
 from .models import Product
-from . import db
+from . import db, os
+import requests
 
 views = Blueprint("views", __name__)
 
@@ -17,7 +17,6 @@ def add_product():
         img_link = request.form.get("img_link")
         filename = img_file.filename
 
-
         product = Product.query.filter_by(name=product_name).first()
 
         if product:
@@ -31,25 +30,45 @@ def add_product():
         elif filename == "" and img_link == "":
             flash('Product\'s image should not be empty.', category='error')
 
-        else:
-            if filename != "" and img_link != "":
-                flash(
-                    'You can\'t have both link and file for the image, choose only one.', category='error')
-                return render_template("add_product.html", filename="")
+        elif filename != "" and img_link != "":
+            flash(
+                'You can\'t have both link and file for the image, choose only one.', category='error')
+            return render_template("add_product.html")
+        elif img_link == "" and filename != "":
+            img_file.save(filename)
 
-            try:
-                img_file.save(filename)
-                filename = '\\website\\' + filename
+            new_product = Product(name=product_name, price=product_price,
+                                  image='\\website\\' + filename, info=product_info)
+
+            db.session.add(new_product)
+            db.session.commit()
+            flash('Product added successfully!', category='success')
+            return render_template('add_product.html')
+        elif img_link != "" and filename == "":
+            # download the link and save it in the database
+            response = requests.get(img_link)
+
+            content_type = response.headers['Content-Type']
+            ext = content_type.split('/')[-1]
+
+            number = 1
+            while os.path.isfile(f'image-{number}.{ext}'):
+                number += 1
+            filename = f'image-{number}.{ext}'
+            if response.status_code == 200:
+                with open(filename, 'wb') as f:
+                    f.write(response.content)
+
                 new_product = Product(name=product_name, price=product_price,
-                                      image=filename if filename != "\\website\\" and img_link == "" else img_link, info=product_info)
-                flash(f"{filename} added!", category='success')
+                                      image='\\website\\'+filename, info=product_info)
+
                 db.session.add(new_product)
                 db.session.commit()
-            except:
-                flash('This Product Already Exists!', category="error")
+                flash('Product added successfully!', category='success')
+                return render_template('add_product.html')
 
             else:
-                flash('Product added successfully!', category='success')
-                return render_template('add_product.html', filename=filename)
+                flash(
+                    'Image Link is Invalid! Try another link or upload an image file.', category='error')
 
-    return render_template('add_product.html', filename=filename)
+    return render_template('add_product.html')
