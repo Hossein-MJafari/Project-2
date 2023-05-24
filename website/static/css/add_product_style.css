@@ -13,6 +13,15 @@ body {
     text-align: center;
 }
 
+.navbar{
+    margin: 0 0 5px 0;
+    padding: 10px;
+    font-size: large;
+    background-image: linear-gradient(135deg, #3a8ffe, #a977ff, #a1498b);
+    border-radius: 0 0 3px 3px;
+    background-size: 250%;
+}
+
 .container {
     margin-top: 50px;
 }
