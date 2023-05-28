@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session, flash
-from .models import Product
-from . import db, os
+from . import sqlite3, current_directory
+from os import path
 import requests
 
 views = Blueprint("views", __name__)
@@ -17,10 +17,16 @@ def add_product():
         img_link = request.form.get("img_link")
         filename = img_file.filename
 
-        product = Product.query.filter_by(name=product_name).first()
+        con = sqlite3.connect(current_directory + "\\mainDB.db")
+        cur = con.cursor()
+        table_name = 'products'
 
-        if product:
-            flash('This Product Already Exists!', category="error")
+        select_query = f"SELECT * FROM {table_name} WHERE product_name=?;"
+        result = cur.execute(select_query,(product_name,)).fetchall()
+
+        if result:
+            flash(
+                f'The Product {product_name} Already Exists!', category="error")
 
         elif len(product_name) < 4:
             flash('Product\'s name must be greater than 3 characters.',
@@ -35,13 +41,16 @@ def add_product():
                 'You can\'t have both link and file for the image, choose only one.', category='error')
             return render_template("add_product.html")
         elif img_link == "" and filename != "":
-            img_file.save(filename)
+            img_file.save("website\\" + filename)
 
-            new_product = Product(name=product_name, price=product_price,
-                                  image='\\website\\' + filename, info=product_info)
+            insert_query = f"""
+            INSERT INTO {table_name} (product_name, product_price, stock, image, description)
+            VALUES (?, ?, 10, ?, ?);
+            """
 
-            db.session.add(new_product)
-            db.session.commit()
+            cur.execute(insert_query, (product_name,
+                        product_price, filename, product_info))
+            con.commit()
             flash('Product added successfully!', category='success')
             return render_template('add_product.html')
         elif img_link != "" and filename == "":
@@ -52,18 +61,23 @@ def add_product():
             ext = content_type.split('/')[-1]
 
             number = 1
-            while os.path.isfile(f'image-{number}.{ext}'):
+            while path.isfile(f'website\\image-{number}.{ext}'):
                 number += 1
+
             filename = f'image-{number}.{ext}'
+
             if response.status_code == 200:
-                with open(filename, 'wb') as f:
+                with open('website\\' + filename, 'wb') as f:
                     f.write(response.content)
 
-                new_product = Product(name=product_name, price=product_price,
-                                      image='\\website\\'+filename, info=product_info)
+                insert_query = f"""
+                INSERT INTO {table_name} (product_name, product_price, stock, image, description)
+                VALUES (?, ?, 10, ?, ?);
+                """
 
-                db.session.add(new_product)
-                db.session.commit()
+                cur.execute(insert_query, (product_name,
+                            product_price, filename, product_info))
+                con.commit()
                 flash('Product added successfully!', category='success')
                 return render_template('add_product.html')
 
@@ -71,4 +85,5 @@ def add_product():
                 flash(
                     'Image Link is Invalid! Try another link or upload an image file.', category='error')
 
+        con.close()
     return render_template('add_product.html')
