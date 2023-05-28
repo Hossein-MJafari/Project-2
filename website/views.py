@@ -12,6 +12,7 @@ def add_product():
     if request.method == "POST":
         product_name = request.form.get("product_name")
         product_price = request.form.get("product_price")
+        product_stock = request.form.get("product_stock")
         product_info = request.form.get("product_info")
         img_file = request.files['img_file']
         img_link = request.form.get("img_link")
@@ -45,11 +46,11 @@ def add_product():
 
             insert_query = f"""
             INSERT INTO {table_name} (product_name, product_price, stock, image, description)
-            VALUES (?, ?, 10, ?, ?);
+            VALUES (?, ?, ?, ?, ?);
             """
 
             cur.execute(insert_query, (product_name,
-                        product_price, filename, product_info))
+                        product_price, product_stock, filename, product_info))
             con.commit()
             flash('Product added successfully!', category='success')
             return render_template('add_product.html')
@@ -72,11 +73,11 @@ def add_product():
 
                 insert_query = f"""
                 INSERT INTO {table_name} (product_name, product_price, stock, image, description)
-                VALUES (?, ?, 10, ?, ?);
+                VALUES (?, ?, ?, ?, ?);
                 """
 
                 cur.execute(insert_query, (product_name,
-                            product_price, filename, product_info))
+                            product_price, product_stock, filename, product_info))
                 con.commit()
                 flash('Product added successfully!', category='success')
                 return render_template('add_product.html')

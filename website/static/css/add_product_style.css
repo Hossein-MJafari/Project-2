@@ -212,3 +212,17 @@ textarea {
     position: absolute;
     right: 10px;
 }
+
+.num-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 5px;
+}
+
+.num-container label {
+    order: 1;
+}
+
+.num-container input {
+    order: 2;
+}
