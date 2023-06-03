@@ -88,3 +88,7 @@ def add_product():
 
         con.close()
     return render_template('add_product.html')
+
+@views.route("/cart", methods=['GET', 'POST'])
+def cart():
+    return render_template('cart.html')
