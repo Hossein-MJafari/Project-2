@@ -26,6 +26,14 @@ body {
     margin-top: 50px;
 }
 
+.ShoppingCart {
+    float: left;
+    color: #0d1075;
+    margin-top: 5px;
+    margin-left: 200px;
+    font-family:'Times New Roman', Times, serif;
+}
+
 .container {
     border: 2px solid rgb(24, 42, 146);
     padding: 15px;
@@ -60,11 +68,14 @@ body {
     cursor: pointer;
     border-radius: 4px;
     margin-right: 5px;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .btn_area input[type="submit"]:hover {
-    background-color: #b48df6;
+    background-color: #d1bef1;
+    color: #540fb6;
 }
+
 table {
     border-radius: 5px;
     overflow: hidden;
@@ -72,14 +83,21 @@ table {
     width: 100%;
 }
 
-th, td {
+th {
     text-align: center;
     padding: 10px;
-}
-
-th {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight: 200;
+    font-size: larger;
     background-color: #ba3cef;
     color: white;
+}
+
+td {
+    text-align: center;
+    padding: 10px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight: 200;
 }
 
 tr:nth-child(even) {
@@ -91,15 +109,28 @@ tr:hover {
 }
 
 .remove-product {
-    border-radius: 4px;
-    float: center;
-    width: 50%;
-    color: #ffffff;
-    background-color: #fb7171
-  }
-  
-.remove-product:hover {
-    background-color: #e9cbcb;
-    color: #961515;
-  }
+  border-radius: 4px;
+  float: center;
+  width: 50%;
+  color: #ffffff;
+  background-color: #fb7171
+}
 
+.remove-product:hover {
+  background-color: #e9cbcb;
+  color: #961515;
+}
+
+.increase {
+  border-radius: 4px;
+  width: 15%;
+  background-color: #b4eada ;
+  color: #000;
+}
+
+.decrease {
+  border-radius: 4px;
+  width: 15%;
+  background-color: #eac5c5 ;
+  color: #000;
+}
