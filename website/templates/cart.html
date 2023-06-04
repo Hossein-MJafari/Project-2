@@ -39,76 +39,141 @@
   <title>Your Shopping Cart</title>
 </head>
 
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>سبد خرید</title>
+    <style>
+        .container {
+            border: 2px solid rgb(24, 42, 146);
+            padding: 15px;
+            margin-right: 180px;
+            border-radius: 10px;
+        }
+
+        .product img {
+            width: auto;
+            height: 150px;
+            border-radius: 3%;
+        }
+
+        .product_info {
+            float: right;
+            text-align: left;
+            margin-right: 250px;
+            margin-top: 25px;
+        }
+
+        .btn_area {
+            float: right;
+            margin-right: 10px;
+            margin-top: 140px;
+        }
+
+        .btn_area input[type="submit"] {
+            background-color: #2089d0;
+            color: rgb(255, 255, 255);
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        .btn_area input[type="submit"]:hover {
+            background-color: #b48df6;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            text-align: center;
+            padding: 10px;
+        }
+        
+        th {
+            background-color: #ba3cef;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">International Store</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link " aria-current="page" href="#">Store</a>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">International Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" aria-current="page" href="#">Store</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </nav>
-  <style>
-    .container {
-      border: 2px solid rgb(24, 42, 146);
-      padding: 15px;
-      margin-right: 180px;
-      border-radius: 10px;
+    </nav>
 
-      .product img {
-      width: 150px;
-      height: auto;
-      border-radius: 5%;
-      margin-left: 10px ;
-    }
-    .product_info {
-      float: right;
-      text-align: left;
-      margin-right: 250px;
-      margin-top: 25px;
-    }
-    .btn_area {
-      float: right;
-      margin-right: 10px;
-      margin-top: -140px;
-    }
-    .btn_area input[type="submit"] {
-      background-color: #2089d0;
-      color: rgb(255, 255, 255);
-      border: none;
-      padding: 8px 16px;
-      cursor: pointer;
-      border-radius: 4px;
-      margin-right: 5px;
-    }
-    .btn_area input[type="submit"]:hover {
-      background-color: #99d4e4;
-    }
-    }
-  </style>
-  <div class="container">
-    <div class="product">
-      <img src="https://propercloth.com/reference/wp-content/uploads/2022/06/yusuke-polo-shirt-682x1024.jpeg" alt="product_image" sizes="">
-      <div class="product_info">
-        <div class="product_name">{{product-name: shirt}}</div>
-        <div class="product_info">{{product-info: nice shirt!}}</div>
-        <div class="product_price">{{product-price: 2.0}}</div>
-        <div class="quantity">{{quantity: 3}}</div>
-        <div class="total_price">{{total-price: 6.0}}</div>
-      </div>
-      <div class="btn_area">
-        <input type="submit" value="remove">
-        <input type="submit" value="add">
-        <input type="submit" value="subtract">
-      </div>
-    </div>
-  </div>
+    <div class="container">
+        <div class="product">
+            <table>
+                <tr>
+                    <th>Product</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+                <tr>
+                    <td class="product"><img
+                            src="https://propercloth.com/reference/wp-content/uploads/2022/06/yusuke-polo-shirt-682x1024.jpeg"
+                            alt="product_image"></td>
+                    <td class="product_name">{{shirt}}</td>
+                    <td class="product_price">{{2.0}}</td>
+                    <td class="quantity">{{3}}</td>
+                    <td class="total_price">{{6.0}}</td>
+                </tr>
+                <tr>
+                    <td class="product"><img
+                            src="https://propercloth.com/reference/wp-content/uploads/2022/06/yusuke-polo-shirt-682x1024.jpeg"
+                            alt="product_image"></td>
+                    <td class="product_name">{{shirt}}</td>
+                    <td class="product_price">{{2.0}}</td>
+                    <td class="quantity">{{3}}</td>
+                    <td class="total_price">{{6.0}}</td>
+                </tr>
+                <tr>
+                    <td class="product"><img
+                            src="https://propercloth.com/reference/wp-content/uploads/2022/06/yusuke-polo-shirt-682x1024.jpeg"
+                            alt="product_image"></td>
+                    <td class="product_name">{{shirt}}</td>
+                    <td class="product_price">{{2.0}}</td>
+                    <td class="quantity">{{3}}</td>
+                    <td class="total_price">{{6.0}}</td>
+                </tr>
+            </table>
 
+            <div class="product_info">
+                <div class="btn_area">
+                    <input type="submit" value="remove">
+                    <input type="submit" value="add">
+                    <input type="submit" value="subtract">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
