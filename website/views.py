@@ -1,13 +1,15 @@
-from flask import Blueprint, render_template, request, session, flash
+from flask import Blueprint, render_template, request, session, flash , jsonify
 from . import sqlite3, current_directory
 from os import path
 import requests
+import os
 
 views = Blueprint("views", __name__)
 
 
 @views.route("/add_product", methods=['GET', 'POST'])
 def add_product():
+
     filename = ""
     if request.method == "POST":
         product_name = request.form.get("product_name")
@@ -88,3 +90,82 @@ def add_product():
 
         con.close()
     return render_template('add_product.html')
+
+
+@views.route('/', methods=['GET', 'POST'])
+def main_page():
+    conn_cart = sqlite3.connect(current_directory + "\\cart.db")
+    cursor_cart = conn_cart.cursor()
+    cursor_cart.execute('DELETE FROM cart')
+    conn_cart.commit()
+    
+    url = 'http://data.fixer.io/api/latest?access_key=716922def62dab0f6a6c6b7289b8daeb&base=EUR&symbols=IRR'
+    access_key = '716922def62dab0f6a6c6b7289b8daeb'
+    base_currency = 'EUR'
+    target_currency = 'IRR'
+    params = {
+        'access_key': access_key,
+        'base': base_currency,
+        'symbols': target_currency
+    }
+    response = requests.get(url, params=params)
+    data = response.json()
+    exchange_rate = data['rates'][target_currency]
+    conn = sqlite3.connect(current_directory + "\\mainDB.db")
+    cursor = conn.cursor()
+    cursor.execute('ALTER TABLE products DROP COLUMN irr_price')
+    
+        
+    cursor.execute('ALTER TABLE products ADD COLUMN irr_price INTEGER')
+    cursor.execute(f'UPDATE products SET irr_price = CAST(product_price * {exchange_rate} AS INTEGER)')
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    conn = sqlite3.connect(current_directory + "\\mainDB.db")
+    table_name = 'products'
+    cursor=conn.cursor()
+    query=f'SELECT * from {table_name}'
+    cursor.execute(query)
+    items=cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+
+    
+
+    return render_template('main_page.html',items=items)
+
+@views.route('/cart', methods=['POST'])
+def cart():
+    conn_cart = sqlite3.connect(current_directory + "\\cart.db")
+    cursor_cart = conn_cart.cursor()
+
+    item_id = request.form.get('item_id')
+    conn = sqlite3.connect(current_directory + "\\mainDB.db")
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM products WHERE id=?', (item_id,))
+    item = cursor.fetchone()
+
+    cursor_cart.execute('SELECT * FROM cart WHERE id=?', (item_id,))
+    item_in_cart = cursor_cart.fetchone()
+
+    if not item_in_cart:
+        cursor_cart.execute(
+            'INSERT INTO cart (name, euro_price, irr_price, image , id) VALUES (?, ?, ?, ?, ?)',
+            ( item[1], f"{item[2]}€", f"{item[6]} IRR", item[4],item[0])
+        )
+        conn_cart.commit()
+        status = "success"
+    else:
+        status = "fail"
+
+    cursor.close()
+    conn.close()
+    cursor_cart.close()
+    conn_cart.close()
+
+    return jsonify({"status": status})
+    
+    
+    
