@@ -45,6 +45,14 @@
 <head>
     <title>سبد خرید</title>
     <style>
+
+        .ShoppingCart {
+            float: left;
+            color: #0d1075;
+            margin-top: 5px;
+            margin-left: 200px;
+        }
+
         .container {
             border: 2px solid rgb(24, 42, 146);
             padding: 15px;
@@ -67,12 +75,12 @@
 
         .btn_area {
             float: right;
-            margin-right: 10px;
-            margin-top: 140px;
+            margin-right: -60px;
+            margin-top: -5px;
         }
 
         .btn_area input[type="submit"] {
-            background-color: #2089d0;
+            background-color: #540fb6;
             color: rgb(255, 255, 255);
             border: none;
             padding: 8px 16px;
@@ -82,9 +90,12 @@
         }
 
         .btn_area input[type="submit"]:hover {
-            background-color: #b48df6;
+            background-color: #d1bef1;
+            color: #540fb6;
         }
         table {
+            border-radius: 5px;
+            overflow: hidden;
             border-collapse: collapse;
             width: 100%;
         }
@@ -106,6 +117,33 @@
         tr:hover {
             background-color: #ddd;
         }
+
+        .remove-product {
+          border-radius: 4px;
+          float: center;
+          width: 50%;
+          color: #ffffff;
+          background-color: #fb7171
+        }
+
+        .remove-product:hover {
+          background-color: #e9cbcb;
+          color: #961515;
+        }
+
+        .increase {
+          border-radius: 5px;
+          width: 10%;
+          background-color: #b4eada ;
+          color: #000;
+        }
+
+        .decrease {
+          border-radius: 5px;
+          width: 9%;
+          background-color: #eac5c5 ;
+          color: #000;
+        }
     </style>
 </head>
 
@@ -125,15 +163,16 @@
             </div>
         </div>
     </nav>
-
+    <div class="ShoppingCart"><h3>Shopping Cart</h3></div>
     <div class="container">
         <div class="product">
             <table>
                 <tr>
                     <th>Product</th>
-                    <th>Product Name</th>
+                    <th>Name</th>
                     <th>Price</th>
                     <th>Quantity</th>
+                    <th></th>
                     <th>Total Price</th>
                 </tr>
                 <tr>
@@ -142,7 +181,16 @@
                             alt="product_image"></td>
                     <td class="product_name">{{shirt}}</td>
                     <td class="product_price">{{2.0}}</td>
-                    <td class="quantity">{{3}}</td>
+                    <td class="quantity">
+                      <input class="decrease" type="button" value="-" onclick="decreaseQuantity()">
+                      <span id="quantityValue">{{3}}</span>
+                      <input class="increase" type="button" value="+" onclick="increaseQuantity()">
+                    </td>
+                    <td class="product-removal">
+                      <button class="remove-product">
+                        Remove
+                      </button>
+                    </td>
                     <td class="total_price">{{6.0}}</td>
                 </tr>
                 <tr>
@@ -151,7 +199,16 @@
                             alt="product_image"></td>
                     <td class="product_name">{{shirt}}</td>
                     <td class="product_price">{{2.0}}</td>
-                    <td class="quantity">{{3}}</td>
+                    <td class="quantity">
+                      <input class="decrease" type="button" value="-" onclick="decreaseQuantity()">
+                      <span id="quantityValue">{{3}}</span>
+                      <input class="increase" type="button" value="+" onclick="increaseQuantity()">
+                    </td>
+                    <td class="product-removal">
+                      <button class="remove-product">
+                        Remove
+                      </button>
+                    </td>
                     <td class="total_price">{{6.0}}</td>
                 </tr>
                 <tr>
@@ -160,20 +217,27 @@
                             alt="product_image"></td>
                     <td class="product_name">{{shirt}}</td>
                     <td class="product_price">{{2.0}}</td>
-                    <td class="quantity">{{3}}</td>
+                    <td class="quantity">
+                      <input class="decrease" type="button" value="-" onclick="decreaseQuantity()">
+                      <span id="quantityValue">{{3}}</span>
+                      <input class="increase" type="button" value="+" onclick="increaseQuantity()">
+                    </td>
+                    <td class="product-removal">
+                      <button class="remove-product">
+                        Remove
+                      </button>
+                    </td>
                     <td class="total_price">{{6.0}}</td>
                 </tr>
             </table>
-
-            <div class="product_info">
-                <div class="btn_area">
-                    <input type="submit" value="remove">
-                    <input type="submit" value="add">
-                    <input type="submit" value="subtract">
-                </div>
             </div>
         </div>
     </div>
+    <div class="product_info">
+      <div class="btn_area">
+          <input type="submit" value="Continue shopping">
+          <input type="submit" value="Checkout">
+      </div>
 </body>
 
 </html>
