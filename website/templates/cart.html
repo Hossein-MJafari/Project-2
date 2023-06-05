@@ -177,29 +177,29 @@
                     <th></th>
                     <th>Total Price</th>
                 </tr>
-
-
-                
+    
                 <tr>
                     {% for item in items %} 
                         {% set quantity = 1 %}
-                        <td class="product"><img
-                            src="{{ url_for('static', filename=item[0]) }}"
-                            alt="product_image"></td>
-                        <td class="product_name">{{item[1]}}</td>
-                        <td class="product_price"><p>{{item[2][0:-1]}} €</p><p>{{item[3][0:-4]}} IRR</p></td>
-                        <td class="quantity">
-                            <input class="decrease" type="button" value="-" onclick="decreaseQuantity()">
-                            <span id="quantityValue">{{quantity}}</span>
-                            <input class="increase" type="button" value="+" onclick="increaseQuantity()">
-                        </td>
-                        <td class="product-removal">
-                            <button class="remove-product" onclick="remove_product()">
-                              Remove
-                            </button>
-                        </td>
-                        <td class="total_price"><p>{{item[2][0:-1]*quantity}} €</p><p>{{item[3][0:-4]*quantity}} IRR</p></td>
-                    {% endfor %} 
+                        <tr id="productRow{{ loop.index }}">
+                            <td class="product"><img
+                                src="{{ url_for('static', filename=item[0]) }}"
+                                alt="product_image"></td>
+                            <td class="product_name">{{item[1]}}</td>
+                            <td class="product_price" id="Price{{ loop.index }}"><p>{{item[2][0:-1]}} €</p><p>{{item[3][0:-4]}} IRR</p></td>
+                            <td class="quantity">
+                                <input class="decrease" type="button" value="-" onclick="decreaseQuantity({{ loop.index }})">
+                                <span id="quantityValue{{ loop.index }}">{{quantity}}</span>
+                                <input class="increase" type="button" value="+" onclick="increaseQuantity({{ loop.index }})"> 
+                            </td>
+                            <td class="product-removal">
+                                <button class="remove-product" onclick="remove_product({{ loop.index }})">
+                                    Remove
+                                </button>
+                            </td>
+                            <td class="total_price" id="totalPrice{{ loop.index }}"><p>{{item[2][0:-1]*quantity}} €</p><p>{{item[3][0:-4]*quantity}} IRR</p></td>   
+                        </tr>
+                        {% endfor %} 
                 </tr>
             </table>
             </div>
@@ -221,28 +221,47 @@
             alert("Thank you for your purchase!");
         }
 
-        function remove_product() {
-            alert("The product removed!");
+        function remove_product(index) {
+            let productRow = document.getElementById("productRow" + index);
+            productRow.remove();
+            alert("The product has been removed!");
         }
 
-        function increaseQuantity() {
+        function increaseQuantity(index) {
+            let quantityElement = document.getElementById("quantityValue" + index);
+            let quantity = parseInt(quantityElement.innerText);
             quantity += 1;
-            updateQuantityDisplay();
+            updateQuantityDisplay(quantityElement, quantity);
+            updateTotalQuantityDisplay(index, quantity);
         }
-
-        function decreaseQuantity() {
+        function decreaseQuantity(index) {
+            let quantityElement = document.getElementById("quantityValue" + index);
+            let quantity = parseInt(quantityElement.innerText);
             if (quantity === 1) {
                 remove_product();
-            } else {
+        } else {
                 quantity -= 1;
-                updateQuantityDisplay();
+                updateQuantityDisplay(quantityElement, quantity);
+                updateTotalQuantityDisplay(index, quantity);
             }
         }
-
-        function updateQuantityDisplay() {
-            document.getElementById("quantityValue").innerText = quantity;
+        function updateQuantityDisplay(element, quantity) {
+            element.innerText = quantity;
+        }
+        function updateTotalQuantityDisplay(index, quantity) {
+            let totalPriceElement = document.getElementById("totalPrice" + index);
+            let priceElement = document.getElementById("Price" + index);
+            let priceValues = priceElement.getElementsByTagName("p");
+            let euroPrice = parseFloat(priceValues[0].innerText.split(" ")[0]);
+            let irrPrice = parseFloat(priceValues[1].innerText.split(" ")[0]);
+            let newEuroPrice = euroPrice * quantity;
+            let newIrrPrice = irrPrice * quantity;
+            let totalPriceValues = totalPriceElement.getElementsByTagName("p");
+            totalPriceValues[0].innerText = newEuroPrice.toFixed(2) + " €";
+            totalPriceValues[1].innerText = newIrrPrice.toFixed(2) + " IRR";
         }
     </script>
+
 </body>
 
 </html>
