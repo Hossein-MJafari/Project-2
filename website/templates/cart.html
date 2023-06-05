@@ -179,8 +179,8 @@
                 </tr>
                 <tr>
                     {% for item in items %} 
-                        {% set item[5] = 1 %}
-                        {% set quantity = int(item[5]) %}
+                        {% set quantity = 1 %}
+                        {% set item[5] = quantity %}
                         <td class="product"><img
                             src="{{ url_for('static', filename=item[0]) }}"
                             alt="product_image"></td>
@@ -230,7 +230,8 @@
         function decreaseQuantity() {
             if (quantity === 1) {
                 remove_product();
-            } else {
+            }
+            else {
                 quantity -= 1;
                 }
         }
