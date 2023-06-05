@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
@@ -195,40 +195,24 @@
                     <td class="total_price">{{6.0}}</td>
                 </tr>
                 <tr>
-                    <td class="product"><img
-                            src="https://propercloth.com/reference/wp-content/uploads/2022/06/yusuke-polo-shirt-682x1024.jpeg"
+                    {% for item in items %} 
+                        <td class="product"><img
+                            src="{{ url_for('static', filename=item[0]) }}"
                             alt="product_image"></td>
-                    <td class="product_name">{{shirt}}</td>
-                    <td class="product_price">{{2.0}}</td>
-                    <td class="quantity">
-                      <input class="decrease" type="button" value="-" onclick="decreaseQuantity()">
-                      <span id="quantityValue">{{3}}</span>
-                      <input class="increase" type="button" value="+" onclick="increaseQuantity()">
-                    </td>
-                    <td class="product-removal">
-                      <button class="remove-product">
-                        Remove
-                      </button>
-                    </td>
-                    <td class="total_price">{{6.0}}</td>
-                </tr>
-                <tr>
-                    <td class="product"><img
-                            src="https://propercloth.com/reference/wp-content/uploads/2022/06/yusuke-polo-shirt-682x1024.jpeg"
-                            alt="product_image"></td>
-                    <td class="product_name">{{shirt}}</td>
-                    <td class="product_price">{{2.0}}</td>
-                    <td class="quantity">
-                      <input class="decrease" type="button" value="-" onclick="decreaseQuantity()">
-                      <span id="quantityValue">{{3}}</span>
-                      <input class="increase" type="button" value="+" onclick="increaseQuantity()">
-                    </td>
-                    <td class="product-removal">
-                      <button class="remove-product">
-                        Remove
-                      </button>
-                    </td>
-                    <td class="total_price">{{6.0}}</td>
+                        <td class="product_name">{{item[1]}}</td>
+                        <td class="product_price"><p>{{item[2]}}€</p><p>{{item[3]}}IRR</p></td>
+                        <td class="quantity">
+                            <input class="decrease" type="button" value="-" onclick="decreaseQuantity()">
+                            <span id="quantityValue">{{item[5]}}</span>
+                            <input class="increase" type="button" value="+" onclick="increaseQuantity()">
+                        </td>
+                        <td class="product-removal">
+                            <button class="remove-product">
+                              Remove
+                            </button>
+                        </td>
+                        <td class="total_price"><p>{{item[2]*item[5]}}€</p><p>{{item[3]*item[5]}}IRR</p></td>
+                    {% endfor %} 
                 </tr>
             </table>
             </div>
