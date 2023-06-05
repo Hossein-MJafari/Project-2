@@ -93,21 +93,6 @@ def add_product():
     return render_template('add_product.html')
 
 
-
-@views.route('/shopping_cart', methods=['GET','POST'])
-def shopping_cart():
-    con_cart = sqlite3.connect(current_directory + "\\cart.db")
-    cursor_cart = con_cart.cursor()
-    query = f'SELECT * from cart'
-    cursor_cart.execute(query)
-    items = cursor_cart.fetchall()
-
-
-    
-    cursor_cart.close()
-    con_cart.close()
-    return render_template('cart.html', items = items)
-
 @views.route('/', methods=['GET', 'POST'])
 def main_page():
     conn_cart = sqlite3.connect(current_directory + "\\cart.db")
@@ -183,4 +168,25 @@ def cart():
 
     return jsonify({"status": status})
     
+
+@views.route('/shopping_cart', methods=['GET','POST'])
+def shopping_cart():
+    con_cart = sqlite3.connect(current_directory + "\\cart.db")
+    cursor_cart = con_cart.cursor()
+    query = f'SELECT * from cart'
+    cursor_cart.execute(query)
+    items = cursor_cart.fetchall()
+
+    cursor_cart.execute("SELECT COUNT(*) FROM cart")
+    result = cursor_cart.fetchone()
+    count = result[0]
+    cursor_cart.close()
+    con_cart.close()
+
+    if count == 0:
+        flash('Your shopping cart is empty.')
+    else:
+        return render_template('cart.html', items = items)
+    
+
     

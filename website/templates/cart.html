@@ -145,6 +145,7 @@
           color: #000;
         }
 
+        
     </style>
 </head>
 
@@ -177,25 +178,9 @@
                     <th>Total Price</th>
                 </tr>
                 <tr>
-                    <td class="product"><img
-                            src="https://propercloth.com/reference/wp-content/uploads/2022/06/yusuke-polo-shirt-682x1024.jpeg"
-                            alt="product_image"></td>
-                    <td class="product_name">{{shirt}}</td>
-                    <td class="product_price">{{2.0}}</td>
-                    <td class="quantity">
-                      <input class="decrease" type="button" value="-" onclick="decreaseQuantity()">
-                      <span id="quantityValue">{{3}}</span>
-                      <input class="increase" type="button" value="+" onclick="increaseQuantity()">
-                    </td>
-                    <td class="product-removal">
-                      <button class="remove-product">
-                        Remove
-                      </button>
-                    </td>
-                    <td class="total_price">{{6.0}}</td>
-                </tr>
-                <tr>
                     {% for item in items %} 
+                        {% set item[5] = 1 %}
+                        {% set quantity = item[5] %}
                         <td class="product"><img
                             src="{{ url_for('static', filename=item[0]) }}"
                             alt="product_image"></td>
@@ -203,11 +188,11 @@
                         <td class="product_price"><p>{{item[2]}}€</p><p>{{item[3]}}IRR</p></td>
                         <td class="quantity">
                             <input class="decrease" type="button" value="-" onclick="decreaseQuantity()">
-                            <span id="quantityValue">{{item[5]}}</span>
+                            <span id="quantityValue">{{quantity}}</span>
                             <input class="increase" type="button" value="+" onclick="increaseQuantity()">
                         </td>
                         <td class="product-removal">
-                            <button class="remove-product">
+                            <button class="remove-product" onclick="remove_product()">
                               Remove
                             </button>
                         </td>
@@ -220,9 +205,39 @@
     </div>
     <div class="product_info">
       <div class="btn_area">
+        <a href="http://127.0.0.1:5000/" target="_blank">
           <input type="submit" value="Continue shopping">
-          <input type="submit" value="Checkout">
+        </a>
+          <input type="submit" value="Checkout" onclick="show_notification()">
+        
       </div>
+
+    <script>
+        function show_notification() {
+            alert("Thank you for your purchase(:");
+        }
+
+        function remove_product() {
+            alert("The product removed!");
+
+        }
+
+        function increaseQuantity() {
+            quantity += 1 ;
+
+        }
+
+        function decreaseQuantity() {
+            if (quantity === 1) {
+                remove_product();
+            } else {
+                quantity -= 1;
+                }
+        }
+
+
+        
+    </script>
 </body>
 
 </html>
