@@ -172,8 +172,9 @@ def cart():
 @views.route('/shopping_cart', methods=['GET','POST'])
 def shopping_cart():
     con_cart = sqlite3.connect(current_directory + "\\cart.db")
+    table_name = 'cart'
     cursor_cart = con_cart.cursor()
-    query = f'SELECT * from cart'
+    query = f'SELECT * from {table_name}'
     cursor_cart.execute(query)
     items = cursor_cart.fetchall()
 
