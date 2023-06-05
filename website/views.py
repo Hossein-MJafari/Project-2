@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request, session, flash
-from . import sqlite3, current_directory
+import sqlite3
 from os import path
 import requests
+
+current_directory = path.dirname(path.abspath(__file__))
 
 views = Blueprint("views", __name__)
 
