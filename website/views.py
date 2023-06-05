@@ -153,8 +153,8 @@ def cart():
 
     if not item_in_cart:
         cursor_cart.execute(
-            'INSERT INTO cart (name, euro_price, irr_price, image , id) VALUES (?, ?, ?, ?, ?)',
-            ( item[1], f"{item[2]}€", f"{item[6]} IRR", item[4],item[0])
+            'INSERT INTO cart (name, euro_price, irr_price, image , id, quantity) VALUES (?, ?, ?, ?, ?, ?)',
+            ( item[1], f"{item[2]}€", f"{item[6]} IRR", item[4],item[0], 1)
         )
         conn_cart.commit()
         status = "success"
