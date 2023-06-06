@@ -1,122 +1,64 @@
-<style> 
-    .item-box { 
-      display: inline-block; 
-      flex-direction: column; 
-      align-items: center; 
-      vertical-align: top; 
-      margin-right: 20px; 
-      width: 300px; 
-      height: 500px; 
-      margin: 35px; 
-      padding: 10px; 
-      border: 1px solid #a977ff; 
-      border-radius: 5px; 
-    } 
-    .item-box img { 
-      width: 100%; 
-      height: 200px; 
-      object-fit: cover; 
-      border-radius: 5px; 
-      margin-bottom: 10px; 
-    } 
-    .item-box h3 { 
-      font-size: 1.5rem; 
-      text-align: center; 
-      margin-bottom: 10px; 
-    } 
-    .item-box p { 
-      font-size: 1.2rem; 
-      text-align: center; 
-      margin-bottom: 10px; 
-    } 
-    .item-box button { 
-      width: 93%; 
-      padding: 10px; 
-      background-color: #a977ff; 
-      color: #fff; 
-      border: none; 
-      border-radius: 5px; 
-      cursor: pointer; 
-      position: absolute; 
-      bottom: 10px; 
-    } 
-    .item-box button:hover { 
-      background-color: #a977ff; 
-    } 
-    
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    
-    </style>
-<!DOCTYPE html> 
-<html> 
- <head> 
-  <meta charset="utf-8" /> 
-  <link rel="stylesheet" href="/static/css/add_product_style.css"> 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" /> 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" /> 
-  <link rel="stylesheet" href="/static/css/item_box_style.css"> 
-   <title>main page</title> 
-</head> 
- <body> 
-    <nav class="navbar navbar-expand-lg navbar-dark"> 
-      <div class="container-fluid"> 
-        <a class="navbar-brand" href="#">International Store</a> 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" 
-          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
-          <span class="navbar-toggler-icon"></span> 
-        </button> 
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
-          <ul class="navbar-nav ms-auto"> 
-            <li class="nav-item"> 
-              <a class="nav-link" href="sabad kharid">Shopping Cart </a> 
-            </li> 
-          </ul> 
-          <div class="navbar-nav"> 
-            <a class="nav-link " aria-current="page" href="add_product">Add Product</a> 
-          </div> 
-        </div> 
-      </div> 
-    </nav> 
-    <div class="container">
-     {% for item in items %} 
-     <div class="item-box" style="position: relative;">
-        <img src="{{ url_for('static', filename=item[4]) }}">
-        <h3>{{ item[1] }}</h3>
-        <p>{{ item[2] }}€</p>
-        <p>{{ item[6] }} IRR</p>
-        <p>stock:{{ item[3] }}</p>
-        <button>Add to cart</button>
-        <button id="{{ item[0] }}" class="add-to-cart">Add to cart</button>
-    </div>
-    {% endfor %} 
-    </div>
-   </body> 
-</html>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).ready(function () {
-    $(".add-to-cart").click(function () {
-      const itemId = $(this).attr("id");
-      $.ajax({
-        url: "/cart",
-        method: "POST",
-        data: {
-          item_id: itemId,
-        },
-      }).done(function (response) {
-        if (response.status === "success") {
-          alert("Item added to cart.");
-        } else {
-          alert("Item is already in the cart.");
-        }
+{% extends 'base.html' %}
+{% block style %}<link rel="stylesheet" href="{{ url_for('static', filename='css/main_page_style.css') }}">{% endblock style %}
+{% block title %}Store{% endblock title %}
+
+
+{% block menu %}
+<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+  <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('views.shopping_cart') }}"
+        >Shopping Cart
+      </a>
+    </li>
+  </ul>
+  <div class="navbar-nav">
+    <a
+      class="nav-link"
+      aria-current="page"
+      href="{{ url_for('views.add_product') }}"
+      >Add Product</a
+    >
+  </div>
+</div>
+{% endblock menu %}
+
+{% block content %}
+
+		<div class="container">
+			{% for item in items %}
+			<div class="item-box" style="position: relative">
+				<img src="{{ url_for('static', filename=item[4]) }}" />
+				<h3>{{ item[1] }}</h3>
+				<p>{{ item[2] }}€</p>
+				<p>{{ item[6] }} IRR</p>
+				<p>stock:{{ item[3] }}</p>
+				<button>Add to cart</button>
+				<button id="{{ item[0] }}" class="add-to-cart">
+					Add to cart
+				</button>
+			</div>
+			{% endfor %}
+		</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".add-to-cart").click(function () {
+          const itemId = $(this).attr("id");
+          $.ajax({
+            url: "/cart",
+            method: "POST",
+            data: {
+              item_id: itemId,
+            },
+          }).done(function (response) {
+            if (response.status === "success") {
+              alert("Item added to cart.");
+            } else {
+              alert("Item is already in the cart.");
+            }
+          });
+        });
       });
-    });
-  });
-</script>
+    </script>
+{% endblock content %}

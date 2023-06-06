@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session, flash
+from flask import Blueprint, render_template, request, session, flash, jsonify
 import sqlite3
 from os import path
 import requests
@@ -186,6 +186,7 @@ def shopping_cart():
 
     if count == 0:
         flash('Your shopping cart is empty.')
+        return render_template('cart.html', items = "")
     else:
         return render_template('cart.html', items = items)
     
