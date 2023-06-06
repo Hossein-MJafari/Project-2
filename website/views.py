@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, session, flash , jsonify
-from . import sqlite3, current_directory
+from flask import Blueprint, render_template, request, session, flash
+import sqlite3
 from os import path
 import requests
-import os
+
+current_directory = path.dirname(path.abspath(__file__))
 
 views = Blueprint("views", __name__)
 
@@ -152,8 +153,8 @@ def cart():
 
     if not item_in_cart:
         cursor_cart.execute(
-            'INSERT INTO cart (name, euro_price, irr_price, image , id) VALUES (?, ?, ?, ?, ?)',
-            ( item[1], f"{item[2]}€", f"{item[6]} IRR", item[4],item[0])
+            'INSERT INTO cart (name, euro_price, irr_price, image , id, quantity) VALUES (?, ?, ?, ?, ?, ?)',
+            ( item[1], f"{item[2]}€", f"{item[6]} IRR", item[4],item[0], 1)
         )
         conn_cart.commit()
         status = "success"
@@ -167,5 +168,26 @@ def cart():
 
     return jsonify({"status": status})
     
+
+@views.route('/shopping_cart', methods=['GET','POST'])
+def shopping_cart():
+    con_cart = sqlite3.connect(path.join(current_directory, "cart.db"))
+    table_name = 'cart'
+    cursor_cart = con_cart.cursor()
+    query = f'SELECT * from {table_name}'
+    cursor_cart.execute(query)
+    items = cursor_cart.fetchall()
+
+    cursor_cart.execute("SELECT COUNT(*) FROM cart")
+    result = cursor_cart.fetchone()
+    count = result[0]
+    cursor_cart.close()
+    con_cart.close()
+
+    if count == 0:
+        flash('Your shopping cart is empty.')
+    else:
+        return render_template('cart.html', items = items)
     
+
     

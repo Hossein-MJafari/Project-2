@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    place-items: center;
+    text-align: center;
+}
+
+.navbar{
+    margin: 0 0 5px 0;
+    padding: 10px;
+    font-size: large;
+    background-image: linear-gradient(135deg, #3a8ffe, #a977ff, #a1498b);
+    border-radius: 0 0 3px 3px;
+    background-size: 250%;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.ShoppingCart {
+    float: left;
+    color: #0d1075;
+    margin-top: 5px;
+    margin-left: 200px;
+    font-family:'Times New Roman', Times, serif;
+}
+
+.container {
+    border: 2px solid rgb(24, 42, 146);
+    padding: 15px;
+    margin-right: 180px;
+    border-radius: 10px;
+}
+
+.product img {
+    width: auto;
+    height: 150px;
+    border-radius: 3%;
+}
+
+.product_info {
+    float: right;
+    text-align: left;
+    margin-right: 250px;
+    margin-top: 25px;
+}
+
+.btn_area {
+    float: right;
+    margin-right: -60px;
+    margin-top: -5px;
+}
+
+.btn_area input[type="submit"] {
+    background-color: #540fb6;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.btn_area input[type="submit"]:hover {
+    background-color: #d1bef1;
+    color: #540fb6;
+}
+
+table {
+    border-radius: 5px;
+    overflow: hidden;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    text-align: center;
+    padding: 10px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight: 200;
+    font-size: larger;
+    background-color: #ba3cef;
+    color: white;
+}
+
+td {
+    text-align: center;
+    padding: 10px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight: 200;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+.remove-product {
+  border-radius: 4px;
+  float: center;
+  width: 50%;
+  color: #ffffff;
+  background-color: #fb7171
+}
+
+.remove-product:hover {
+  background-color: #e9cbcb;
+  color: #961515;
+}
+
+.increase {
+  border-radius: 4px;
+  width: 15%;
+  background-color: #b4eada ;
+  color: #000;
+}
+
+.decrease {
+  border-radius: 4px;
+  width: 15%;
+  background-color: #eac5c5 ;
+  color: #000;
+}
