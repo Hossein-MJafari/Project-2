@@ -57,17 +57,19 @@ body {
 .item-box button {
     width: 93%;
     padding: 10px;
-    background-color: #a977ff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    background-image: linear-gradient(135deg, #3a8ffe, #9658fe, #880066);
+    background-size: 200%;
+    transition: background-position .3s;
     position: absolute;
     bottom: 10px;
 }
 
 .item-box button:hover {
-    background-color: #a977ff;
+    background-position: right;
 }
 
 .container {
