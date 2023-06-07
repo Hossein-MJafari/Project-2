@@ -114,9 +114,9 @@ def main_page():
     # }
     # response = requests.get(url, params=params)
     response = requests.get(url)
-    print(response)
+    # print(response)
     data = response.json()
-    print(data)
+    # print(data)
     exchange_rate = data['rates'][target_currency]
     conn = sqlite3.connect(current_directory + "\\mainDB.db")
     cursor = conn.cursor()
