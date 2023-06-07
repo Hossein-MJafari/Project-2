@@ -20,20 +20,15 @@ body {
     background-size: 250%;
 }
 
-.container {
-    margin-top: 50px;
-}
-
 .ShoppingCart {
-    float: left;
+    text-align: center;
     color: #0d1075;
-    margin-top: 5px;
-    margin-left: 200px;
-    font-family: 'Times New Roman', Times, serif;
+    margin: 15px;
 }
 
 .container {
-    border: 2px solid rgb(24, 42, 146);
+    border: 2px solid rgba(0, 0, 0, .1);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .1);
     padding: 15px;
     margin-right: 180px;
     border-radius: 10px;
@@ -58,20 +53,20 @@ body {
     margin-top: -10px;
 }
 
-.btn_area input[type="submit"] {
-    background-color: #540fb6;
+.btn_area input[type="submit"] {    
+    background-image: linear-gradient(135deg, #3a8ffe, #a977ff, #a1498b);
+    background-size: 200%;
+    transition: background-position .3s;
     color: rgb(255, 255, 255);
     border: none;
     padding: 8px 16px;
     cursor: pointer;
     border-radius: 4px;
-    margin-right: 5px;
-    font-family: 'Times New Roman', Times, serif;
+    margin: 5px;
 }
 
 .btn_area input[type="submit"]:hover {
-    background-color: #d1bef1;
-    color: #540fb6;
+    background-position: right;
 }
 
 table {
@@ -82,19 +77,19 @@ table {
 }
 
 th {
-    text-align: center;
+    text-align: center !important;
     padding: 10px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: 200;
+    font-weight: bold;
     font-size: larger;
-    background-color: #ba3cef;
+    background-image: linear-gradient(135deg, #3a8ffe, #a977ff);
+    background-size: 500%;
     color: white;
 }
 
 td {
     text-align: center;
     padding: 10px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold !important;
     font-weight: 200;
 }
 
@@ -107,11 +102,14 @@ tr:hover {
 }
 
 .remove-product {
-    border-radius: 4px;
+    padding: 2px 5px;
+    border-radius: 5px;
     float: center;
     width: 65%;
     color: #ffffff;
-    background-color: #fb7171
+    background-color: #fb7171;
+    border:#000 solid 1px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .1);
 }
 
 .remove-product:hover {
@@ -120,15 +118,21 @@ tr:hover {
 }
 
 .increase {
-    border-radius: 4px;
+    margin: auto 3px;
+    border-radius: 5px;
     width: 15%;
     background-color: #b4eada;
     color: #000;
+    border:#000 solid 1px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .1);
 }
 
 .decrease {
-    border-radius: 4px;
+    margin: auto 3px;
+    border-radius: 5px;
     width: 15%;
     background-color: #eac5c5;
     color: #000;
+    border:#000 solid 1px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .1);
 }

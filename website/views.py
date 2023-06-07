@@ -17,6 +17,8 @@ def add_product():
         product_price = request.form.get("product_price")
         product_stock = request.form.get("product_stock")
         product_info = request.form.get("product_info")
+        if product_info == "":
+            product_info = "No Description!"
         img_file = request.files['img_file']
         img_link = request.form.get("img_link")
         filename = img_file.filename
