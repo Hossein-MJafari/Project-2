@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session, flash, jsonify
 import sqlite3
-from os import path
+from os import path, remove, getcwd
 import requests
 
 current_directory = path.dirname(path.abspath(__file__))
@@ -48,6 +48,7 @@ def add_product():
                     'You can\'t have both link and file for the image, choose only one.', category='error')
                 return render_template("add_product.html")
             elif img_link == "" and filename != "":
+                filename = product_name + '.' + filename.split('.')[1]
                 img_file.save("website\\static\\" + filename)
 
                 insert_query = f"""
@@ -67,11 +68,7 @@ def add_product():
                 content_type = response.headers['Content-Type']
                 ext = content_type.split('/')[-1]
 
-                number = 1
-                while path.isfile(f'website\\static\\image-{number}.{ext}'):
-                    number += 1
-
-                filename = f'image-{number}.{ext}'
+                filename = f'{product_name}.{ext}'
 
                 if response.status_code == 200:
                     with open('website\\static\\' + filename, 'wb') as f:
@@ -103,9 +100,14 @@ def add_product():
             result = cur.execute(select_query,(product_name,)).fetchall()
 
             if result:
+                img = result[0][4]
+                print(img)
+                file_path = path.join(current_directory, f"static\\{img}")
+                remove(file_path)
                 cur.execute(f'DELETE FROM {table_name} WHERE product_name=?', (product_name,))
                 con.commit()
                 cur.close()
+                flash(f"The Product {product_name} Has Been Deleted Successfully!", category='success')
             else:
                 flash(f"The Product {product_name} Not Found!", category='error')
 
