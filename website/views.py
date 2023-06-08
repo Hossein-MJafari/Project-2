@@ -121,8 +121,8 @@ def main_page():
     cursor_cart.execute('DELETE FROM cart')
     conn_cart.commit()
     
-    url = 'http://data.fixer.io/api/latest?access_key=ee9b67a4ae398b97c4f4b8cce43f3971&base=EUR&symbols=IRR'
-    access_key = 'ee9b67a4ae398b97c4f4b8cce43f3971'
+    url = 'http://data.fixer.io/api/latest?access_key=59eea8bcd60455ffaac24bf92d03b2ef&base=EUR&symbols=IRR'
+    access_key = '59eea8bcd60455ffaac24bf92d03b2ef'
     base_currency = 'EUR'
     target_currency = 'IRR'
     params = {
