@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session, flash
+from flask import Blueprint, render_template, request, session, flash, jsonify
 import sqlite3
 from os import path
 import requests
@@ -17,6 +17,8 @@ def add_product():
         product_price = request.form.get("product_price")
         product_stock = request.form.get("product_stock")
         product_info = request.form.get("product_info")
+        if product_info == "":
+            product_info = "No Description!"
         img_file = request.files['img_file']
         img_link = request.form.get("img_link")
         filename = img_file.filename
@@ -45,7 +47,7 @@ def add_product():
                 'You can\'t have both link and file for the image, choose only one.', category='error')
             return render_template("add_product.html")
         elif img_link == "" and filename != "":
-            img_file.save("website\\" + filename)
+            img_file.save("website\\static\\" + filename)
 
             insert_query = f"""
             INSERT INTO {table_name} (product_name, product_price, stock, image, description)
@@ -65,13 +67,13 @@ def add_product():
             ext = content_type.split('/')[-1]
 
             number = 1
-            while path.isfile(f'website\\image-{number}.{ext}'):
+            while path.isfile(f'website\\static\\image-{number}.{ext}'):
                 number += 1
 
             filename = f'image-{number}.{ext}'
 
             if response.status_code == 200:
-                with open('website\\' + filename, 'wb') as f:
+                with open('website\\static\\' + filename, 'wb') as f:
                     f.write(response.content)
 
                 insert_query = f"""
@@ -100,17 +102,21 @@ def main_page():
     cursor_cart.execute('DELETE FROM cart')
     conn_cart.commit()
     
-    url = 'http://data.fixer.io/api/latest?access_key=716922def62dab0f6a6c6b7289b8daeb&base=EUR&symbols=IRR'
-    access_key = '716922def62dab0f6a6c6b7289b8daeb'
-    base_currency = 'EUR'
+    # url = 'http://data.fixer.io/api/latest?access_key=716922def62dab0f6a6c6b7289b8daeb&base=EUR&symbols=IRR'
+    # access_key = '716922def62dab0f6a6c6b7289b8daeb'
+    # base_currency = 'EUR'
     target_currency = 'IRR'
-    params = {
-        'access_key': access_key,
-        'base': base_currency,
-        'symbols': target_currency
-    }
-    response = requests.get(url, params=params)
+    url = f"https://openexchangerates.org/api/latest.json?app_id=3edb4c5978cf43c6b630a88ea5d3a107"
+    # params = {
+    #     'access_key': access_key,
+    #     'base': base_currency,
+    #     'symbols': target_currency
+    # }
+    # response = requests.get(url, params=params)
+    response = requests.get(url)
+    # print(response)
     data = response.json()
+    # print(data)
     exchange_rate = data['rates'][target_currency]
     conn = sqlite3.connect(current_directory + "\\mainDB.db")
     cursor = conn.cursor()
@@ -186,6 +192,7 @@ def shopping_cart():
 
     if count == 0:
         flash('Your shopping cart is empty.')
+        return render_template('cart.html', items = "")
     else:
         return render_template('cart.html', items = items)
     
