@@ -140,7 +140,7 @@ def main_page():
     conn = sqlite3.connect(current_directory + "\\mainDB.db")
     cursor = conn.cursor()
     cursor.execute('ALTER TABLE products DROP COLUMN irr_price')
-    
+    #test
         
     cursor.execute('ALTER TABLE products ADD COLUMN irr_price INTEGER')
     cursor.execute(f'UPDATE products SET irr_price = CAST(product_price * {exchange_rate} AS INTEGER)')
