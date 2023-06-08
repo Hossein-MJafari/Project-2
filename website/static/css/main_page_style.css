@@ -20,6 +20,7 @@ body {
     background-size: 250%;
 }
 
+
 .item-box {
     display: inline-block;
     flex-direction: column;
@@ -102,3 +103,4 @@ body {
     flex-wrap: wrap;
     justify-content: center;
 }
+
