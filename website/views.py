@@ -121,21 +121,19 @@ def main_page():
     cursor_cart.execute('DELETE FROM cart')
     conn_cart.commit()
     
-    # url = 'http://data.fixer.io/api/latest?access_key=716922def62dab0f6a6c6b7289b8daeb&base=EUR&symbols=IRR'
-    # access_key = '716922def62dab0f6a6c6b7289b8daeb'
-    # base_currency = 'EUR'
+    url = 'http://data.fixer.io/api/latest?access_key=59eea8bcd60455ffaac24bf92d03b2ef&base=EUR&symbols=IRR'
+    access_key = '59eea8bcd60455ffaac24bf92d03b2ef'
+    base_currency = 'EUR'
     target_currency = 'IRR'
-    url = f"https://openexchangerates.org/api/latest.json?app_id=3edb4c5978cf43c6b630a88ea5d3a107"
-    # params = {
-    #     'access_key': access_key,
-    #     'base': base_currency,
-    #     'symbols': target_currency
-    # }
-    # response = requests.get(url, params=params)
+    params = {
+         'access_key': access_key,
+         'base': base_currency,
+         'symbols': target_currency
+    }
+    response = requests.get(url, params=params)
     response = requests.get(url)
-    # print(response)
     data = response.json()
-    # print(data)
+    
     exchange_rate = data['rates'][target_currency]
     conn = sqlite3.connect(current_directory + "\\mainDB.db")
     cursor = conn.cursor()
@@ -209,11 +207,7 @@ def shopping_cart():
     cursor_cart.close()
     con_cart.close()
 
-    if count == 0:
-        flash('Your shopping cart is empty.')
-        return render_template('cart.html', items = "")
-    else:
-        return render_template('cart.html', items = items)
+    return render_template('cart.html', items = items)
     
 
     

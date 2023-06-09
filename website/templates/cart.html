@@ -18,7 +18,7 @@
     <div class="container">
         <div class="product">
             <table>
-                <tr>
+                <tr id="table-head">
                     <th>Product</th>
                     <th>Name</th>
                     <th>Price</th>
@@ -54,10 +54,11 @@
             </div>
         </div>
     </div>
+    
     <div class="product_info">
       <div class="btn_area">
         <a href="{{ url_for('views.main_page') }}" target="_parent">
-          <input type="submit" value="Checkout" onclick="show_notification()">
+          <input type="submit" value="Checkout" onclick="checkout()">
         </a>
         
       </div>
@@ -65,10 +66,22 @@
     <script>
         let quantity = 1;
 
-        function show_notification() {
-            alert("Thank you for your purchase!");
+        function isCartEmpty() {
+            let items = document.getElementsByTagName("tr");
+            return items.length <= 2; // Only header and empty row
         }
 
+        function show_notification(message) {
+            alert(message);
+        }
+
+        function checkout() {
+            if (isCartEmpty()) {
+                show_notification("Your shopping cart is empty.");
+            } else {
+                show_notification("Thank you for your purchase!");
+            }
+        }
         function remove_product(index) {
             let productRow = document.getElementById("productRow" + index);
             productRow.remove();
@@ -110,4 +123,6 @@
         }
     </script>
 
+
 {% endblock content %}
+
