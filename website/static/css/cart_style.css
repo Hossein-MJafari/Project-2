@@ -81,8 +81,6 @@ th {
     padding: 10px;
     font-weight: bold;
     font-size: larger;
-    background-image: linear-gradient(135deg, #3a8ffe, #a977ff, #a1498b);
-    background-size: 500%;
     color: white;
 }
 
@@ -136,4 +134,9 @@ tr:hover {
     color: #000;
     border:#000 solid 1px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .1);
+}
+
+#table-head {
+    background-image: linear-gradient(135deg, #3a8ffe, #a977ff, #a1498b);
+    background-size: 200%;
 }
