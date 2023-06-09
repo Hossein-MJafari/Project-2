@@ -102,14 +102,15 @@ tr:hover {
 }
 
 .remove-product {
-    padding: 2px 5px;
+    padding: 2px 7px;
     border-radius: 5px;
     float: center;
-    width: 65%;
+    width: 75%;
     color: #ffffff;
     background-color: #fb7171;
     border:#000 solid 1px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .1);
+    text-align: center;
 }
 
 .remove-product:hover {

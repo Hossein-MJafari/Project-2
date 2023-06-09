@@ -207,11 +207,7 @@ def shopping_cart():
     cursor_cart.close()
     con_cart.close()
 
-    if count == 0:
-        flash('Your shopping cart is empty.')
-        return render_template('cart.html', items = "")
-    else:
-        return render_template('cart.html', items = items)
+    return render_template('cart.html', items = items)
     
 
     
